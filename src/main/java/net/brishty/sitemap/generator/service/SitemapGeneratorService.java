@@ -1,6 +1,7 @@
 package net.brishty.sitemap.generator.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.log4j.Log4j;
 import net.brishty.sitemap.generator.service.domain.City;
 import net.brishty.sitemap.generator.service.domain.SupportedCities;
 import net.brishty.sitemap.generator.web.domain.Sitemap;
@@ -13,6 +14,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Log4j
 @Service
 public class SitemapGeneratorService {
 
@@ -42,8 +44,17 @@ public class SitemapGeneratorService {
             );
 
             List<String> links = mapToLinks(supportedCities);
-            return Sitemap.builder().links(links).build();
+
+            return Sitemap.builder()
+                    .links(links)
+                    .build();
+
         } catch (Exception e) {
+            log.error(String.format(
+                    "Error occurred while loading %s file. Here is the error message : %s",
+                    CITY_LIST_FILE_NAME,
+                    e.getMessage()
+            ));
             return Sitemap.builder().build();
         }
     }
@@ -56,7 +67,8 @@ public class SitemapGeneratorService {
     }
 
     private String generateSitemapLink(City city) {
-        String sanitisedCity = StringUtils.stripAccents(city.getName().trim())
+        String sanitisedCity = StringUtils
+                .stripAccents(city.getName().trim())
                 .replace("‘", "")
                 .replace(" ", "%20");
 
