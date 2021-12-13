@@ -3,16 +3,14 @@ package net.brishty.sitemap.generator.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.log4j.Log4j;
 import net.brishty.sitemap.generator.service.domain.City;
+import net.brishty.sitemap.generator.service.domain.Sitemap;
 import net.brishty.sitemap.generator.service.domain.SupportedCities;
-import net.brishty.sitemap.generator.web.domain.Sitemap;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -48,12 +46,13 @@ public class SitemapGeneratorService {
             Set<String> links = mapToLinks(supportedCities);
 
             return Sitemap.builder()
-                    .links(new ArrayList<>(links))
+                    .links(links)
                     .build();
 
         } catch (Exception e) {
             log.error(String.format(
-                    "Error occurred while loading %s file. Here is the error message : %s",
+                    "Error occurred while loading %s file, empty list of sitemap links will be returned. " +
+                            "Here is the error message : %s",
                     CITY_LIST_FILE_NAME,
                     e.getMessage()
             ));

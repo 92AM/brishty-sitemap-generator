@@ -6,14 +6,14 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Sitemap {
+public class SitemapResponseDto {
 
     @JsonProperty("links")
-    List<String> links;
+    Set<String> links;
 }
