@@ -11,7 +11,9 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Log4j
@@ -43,10 +45,10 @@ public class SitemapGeneratorService {
                     SupportedCities.class
             );
 
-            List<String> links = mapToLinks(supportedCities);
+            Set<String> links = mapToLinks(supportedCities);
 
             return Sitemap.builder()
-                    .links(links)
+                    .links(new ArrayList<>(links))
                     .build();
 
         } catch (Exception e) {
@@ -59,11 +61,11 @@ public class SitemapGeneratorService {
         }
     }
 
-    private List<String> mapToLinks(SupportedCities supportedCities) {
+    private Set<String> mapToLinks(SupportedCities supportedCities) {
         return supportedCities.getCities()
                 .parallelStream()
                 .map(this::generateSitemapLink)
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
     }
 
     private String generateSitemapLink(City city) {
