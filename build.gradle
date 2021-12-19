@@ -39,4 +39,5 @@ task stage {
 
 jar {
     baseName = 'brishty-sitemap-generator'
+    version = "${projectVersion}"
 }
