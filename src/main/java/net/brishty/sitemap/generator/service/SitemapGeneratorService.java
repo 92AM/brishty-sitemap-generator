@@ -75,6 +75,9 @@ public class SitemapGeneratorService {
         String sanitisedCity = StringUtils
                 .stripAccents(city.getName().trim())
                 .replace("‘", "")
+                .replace("'", "")
+                .replace("’", "")
+                .replace("`", "")
                 .replace(" ", "%20");
 
         return String.format(BRISHTY_WEATHER_PATH + "%s", sanitisedCity);
