@@ -11,6 +11,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -43,7 +44,7 @@ public class SitemapGeneratorService {
                     SupportedCities.class
             );
 
-            Set<String> links = mapToLinks(supportedCities);
+            List<String> links = mapToLinks(supportedCities);
 
             return Sitemap.builder()
                     .links(links)
@@ -60,11 +61,14 @@ public class SitemapGeneratorService {
         }
     }
 
-    private Set<String> mapToLinks(SupportedCities supportedCities) {
+    private List<String> mapToLinks(SupportedCities supportedCities) {
         return supportedCities.getCities()
                 .parallelStream()
                 .map(this::generateSitemapLink)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toSet())
+                .stream()
+                .sorted()
+                .collect(Collectors.toList());
     }
 
     private String generateSitemapLink(City city) {

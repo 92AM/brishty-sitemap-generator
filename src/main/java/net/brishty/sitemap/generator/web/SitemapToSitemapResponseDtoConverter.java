@@ -5,22 +5,20 @@ import net.brishty.sitemap.generator.web.domain.SitemapResponseDto;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-
-import static java.util.List.copyOf;
 
 @Component
 public class SitemapToSitemapResponseDtoConverter {
 
     public SitemapResponseDto convert(Sitemap sitemap) {
 
-        Set<String> links = Optional.of(sitemap)
+        List<String> links = Optional.of(sitemap)
                 .map(Sitemap::getLinks)
-                .orElse(Collections.emptySet());
+                .orElse(Collections.emptyList());
 
         return SitemapResponseDto.builder()
-                .links(copyOf(links))
+                .links(links)
                 .build();
     }
 }
