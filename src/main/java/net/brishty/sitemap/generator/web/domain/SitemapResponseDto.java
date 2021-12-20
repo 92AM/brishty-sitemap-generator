@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.Set;
+import java.util.List;
 
 @Getter
 @Builder
@@ -15,5 +15,5 @@ import java.util.Set;
 public class SitemapResponseDto {
 
     @JsonProperty("links")
-    Set<String> links;
+    List<String> links;
 }
