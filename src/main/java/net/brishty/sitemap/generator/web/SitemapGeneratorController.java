@@ -3,7 +3,10 @@ package net.brishty.sitemap.generator.web;
 import net.brishty.sitemap.generator.service.SitemapGeneratorService;
 import net.brishty.sitemap.generator.service.domain.Sitemap;
 import net.brishty.sitemap.generator.web.domain.SitemapResponseDto;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -18,9 +21,10 @@ public class SitemapGeneratorController {
         this.sitemapToSitemapResponseDtoConverter = sitemapToSitemapResponseDtoConverter;
     }
 
-    @GetMapping("/generate-sitemap")
-    public SitemapResponseDto getDynamicSitemapLinks() {
-        Sitemap sitemap = sitemapGeneratorService.getSiteMap();
+    @GetMapping("/generate-sitemap/{pageNumber}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public SitemapResponseDto getDynamicSitemapLinks(@PathVariable("pageNumber") Integer pageNumber) {
+        Sitemap sitemap = sitemapGeneratorService.getSiteMap(pageNumber);
         return sitemapToSitemapResponseDtoConverter.convert(sitemap);
     }
 

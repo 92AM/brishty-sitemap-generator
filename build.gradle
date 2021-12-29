@@ -7,6 +7,7 @@ plugins {
 group = 'net.brishty'
 version = "${projectVersion}" as Object
 sourceCompatibility = "${javaJdkVersion}" as Object
+ext['log4j2.version'] = '2.17.0'
 
 configurations {
     compileOnly {
@@ -22,11 +23,22 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-web:${springbootVersion}"
     implementation "commons-io:commons-io:${commonsIoVersion}"
     implementation "org.apache.commons:commons-lang3:${apacheCommonsVersion}"
-    implementation group: 'org.apache.logging.log4j', name: 'log4j-1.2-api', version: "${apacheLog4jVersion}"
+//    implementation "log4j:log4j:${apacheLog4jVersion}"
+//    implementation group: 'log4j', name: 'log4j', version: "${apacheLog4jVersion}"
+    implementation(platform("org.apache.logging.log4j:log4j-bom:2.17.0"))
+    implementation "com.google.guava:guava:${guavaVersion}"
 
     compileOnly "org.projectlombok:lombok:${projectLombokVersion}"
     annotationProcessor "org.projectlombok:lombok:${projectLombokVersion}"
     testImplementation "org.springframework.boot:spring-boot-starter-test:${springbootVersion}"
+}
+
+configurations.all {
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        if (details.requested.group == 'org.apache.logging.log4j') {
+            details.useVersion '2.17.0'
+        }
+    }
 }
 
 test {

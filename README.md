@@ -17,9 +17,9 @@ Note : the Springboot server should start on port `8080`.
 
 ## Endpoints
 
-### GET /generate-sitemap
+### GET /generate-sitemap/{pageNumber}
 
-Gets list of SEO friendly URLs for brishty.net
+Gets list of SEO friendly URLs for brishty.net, supplied page number can be 0 - 19
 
 Example response :
 
