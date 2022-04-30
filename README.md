@@ -1,4 +1,4 @@
-# Brishty Sitemap Generator
+# Brishty Sitemap Generator (not in use)
 
 This is a simple Springboot application that processes over 200k cities from a given json file (provided
 by https://openweathermap.org/) and generates a list of SEO friendly sitemap URL's for Brishty.net.
@@ -44,3 +44,12 @@ Example response :
 ### GET /heart-beat
 
 Sample "Heart beat" endpoint ...
+
+## Live endpoint calls
+
+The application is deployed on Heroku and can be accessed as below : 
+
+Note : the server goes to sleep when inactive, so may take some time to load up. 
+
+* https://brishty-sitemap-generator.herokuapp.com/heart-beat
+* https://brishty-sitemap-generator.herokuapp.com/generate-sitemap/1
